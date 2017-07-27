@@ -1,6 +1,5 @@
 'use strict';
 
-const fs = require('fs');
 const assert = require('assert');
 const jsmidgen = require('jsmidgen');
 
@@ -9,9 +8,8 @@ const jsmidgen = require('jsmidgen');
  * @param  {Array} notes    Notes are in the format: {note: ['c3'], level: 127, length: 64}
  * @param  {String} fileName If a filename is not provided, then `music.mid` is used by default
  */
-const midi = (notes, fileName) => {
+const midi = (notes) => {
 	assert(notes !== undefined && typeof notes !== 'string', 'You must provide an array of notes to write!');
-	fileName = fileName || 'music.mid';
 	let file = new jsmidgen.File();
 	let track = new jsmidgen.Track();
 	file.addTrack(track);
@@ -34,7 +32,7 @@ const midi = (notes, fileName) => {
 		}
 	});
 
-	fs.writeFileSync(fileName, file.toBytes(), 'binary');
+	return file.toBytes();
 }
 
 module.exports = midi;
